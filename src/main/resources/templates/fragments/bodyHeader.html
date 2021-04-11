@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<div class="header" th:fragment="bodyHeader">
+
+    <div class="container">
+        <div class="text-end m-1" style="font-size:12px;">
+
+            <span sec:authorize="isAnonymous()" ><a href="/oauth2/authorization/google">로그인</a></span>
+
+            <span sec:authorize="isAuthenticated()" class="badge rounded-pill bg-primary">일반</span>
+            <span sec:authorize="isAuthenticated()" th:text="${username}"></span>
+            <span sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></span>
+
+        </div>
+        <div class="text-center">
+            <a href="/"><img style="width:103px;height:79px;" src="https://res.kurly.com/images/marketkurly/logo/logo_x2.png"/></a>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">신상품</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">베스트</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">알뜰쇼핑</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">금주혜택</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+</div>
