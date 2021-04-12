@@ -3,16 +3,19 @@ package com.kurly.demo.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@Setter
 public class User {
 
     @Id
     @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false)

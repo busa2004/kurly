@@ -1,14 +1,17 @@
 package com.kurly.demo.domain;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
+@NoArgsConstructor
+@Entity
 @Setter
 public class Goods {
 
@@ -20,5 +23,14 @@ public class Goods {
     private int price;
     private String name;
     private String desc;
+
+    @Builder
+    public Goods(Long id, String img, int price, String name,String desc){
+        this.id = id;
+        this.img = img;
+        this.price = price;
+        this.name = name;
+        this.desc = desc;
+    }
 
 }
