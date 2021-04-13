@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,21 @@ public class CartService {
         Goods goods = goodsRepository.findOne(requestDto.getGoodsId());
         cartRepository.save(Cart.builder().user(user.get()).goods(goods).count(requestDto.getCount()).build());
 
+    }
+
+    public List<Cart> findAll(){
+
+        return cartRepository.findAll();
+    }
+
+    public List<Cart> findByUserId(Long userId){
+
+        return cartRepository.findByUserId(userId);
+    }
+
+    public void delete(Long cartId){
+
+        cartRepository.deleteById(cartId);
     }
 
 }

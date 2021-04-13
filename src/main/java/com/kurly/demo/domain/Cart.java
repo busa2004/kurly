@@ -3,6 +3,7 @@ package com.kurly.demo.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -32,6 +33,8 @@ public class Cart {
         this.user = user;
         this.count = count;
     }
+
+
 
 
 }
