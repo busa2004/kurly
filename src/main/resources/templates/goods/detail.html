@@ -25,6 +25,25 @@
 
     <div class="container">
 
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="countModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">알림메세지</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                       수량은 반드시 1 이상이어야 합니다.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="row row-cols-1 row-cols-md-2">
 
             <div class="col">
@@ -74,7 +93,7 @@
 
                             <tr>
                                 <th scope="row">구매수량</th>
-                                <td><input id="count" type="number" class="form-control" placeholder="수량을 선택해 주세요"
+                                <td><input id="count" type="number" class="form-control" min="0" placeholder="수량을 선택해 주세요"
                                 onChange="changeTotal()"></td>
                             </tr>
                         </tbody>
@@ -122,8 +141,9 @@
             var toastList = toastElList.map(function (toastEl) {
               return new bootstrap.Toast(toastEl, 'autohide')
             })
-
-            var id = [[${goods.id}]];
+    var myModal = new bootstrap.Modal(document.getElementById('countModal'), {
+      keyboard: false
+    })
 
             function changeTotal(){
                 var price = parseInt($('#price').text())
@@ -133,21 +153,41 @@
             }
 
             function saveCart(){
-                $.ajax({
-                url:"cart"
-                ,data:{ count : parseInt($('#count').val())
-                        , goodsId : id }
-                ,type:"POST"
-                })
-                .done(function() {
 
-                    $('.toast').toast('show')
+                if(!$('#loginName').text()){
+                    location.replace('/oauth2/authorization/google');
+                    return
+                }
 
-                })
-                .fail(function() {
+                var count = parseInt($('#count').val())
+                var id = [[${goods.id}]];
 
-                    alert("요청 실패");
-                })
+                if(count < 1){
+                    myModal.show()
+                    return
+                }
+
+               save({ count : count, goodsId : id });
+
+            }
+
+            function save(data){
+
+                    $.ajax({
+                    url:"cart"
+                    ,data:data
+                    ,type:"POST"
+                    })
+                    .done(function() {
+
+                        $('.toast').toast('show')
+
+                    })
+                    .fail(function() {
+
+                        alert("요청 실패");
+                    })
+
             }
 </script>
 </html>

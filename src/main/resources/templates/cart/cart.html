@@ -5,9 +5,7 @@
 
 <script>
 
-      if( $('.removeBtn').length == 0 ){
-        $('#noData').show()
-      }
+
 
 </script>
 <div th:replace="fragments/bodyHeader :: bodyHeader" />
@@ -100,6 +98,9 @@
     </div>
 </body>
 <script>
+    if( $('.removeBtn').length == 0 ){
+        $('#noData').show()
+    }
 
     $(".removeBtn").click(function(e){
 
@@ -115,7 +116,6 @@
                 url:"cart"
                 ,data: { cartId : cartId }
                 ,type:"DELETE"
-                ,dataType:"json"
                 })
                 .done(function() {
 
@@ -126,9 +126,9 @@
                     }
 
                 })
-                .fail(function() {
+                .fail(function(error) {
 
-                    alert("요청 실패");
+                    alert(error);
                 })
      }
 
