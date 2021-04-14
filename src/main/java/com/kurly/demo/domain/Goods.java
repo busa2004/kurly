@@ -25,8 +25,7 @@ public class Goods {
     private String desc;
 
     @Builder
-    public Goods(Long id, String img, int price, String name,String desc){
-        this.id = id;
+    public Goods(String img, int price, String name,String desc){
         this.img = img;
         this.price = price;
         this.name = name;

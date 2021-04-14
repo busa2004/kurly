@@ -38,7 +38,7 @@
 
                 <div th:each="item : ${goods}" class="col">
                     <div class="card h-100">
-                        <a th:href="@{/goods?itemId={id} (id=${item.id})}">
+                        <a th:href="@{/goods/{id} (id=${item.id})}">
                             <img th:src="${item.img}" class="card-img-top" alt="">
                         </a>
                         <div class="card-body">

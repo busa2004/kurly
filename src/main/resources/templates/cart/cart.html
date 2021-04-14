@@ -57,6 +57,7 @@
                     </div>
 
                     <div class="container" id="cartContainer">
+
                         <div th:each="item,i : ${carts}" class="col" th:id="|carts${item.id}|">
 
                             <div class="row m-3">
@@ -79,15 +80,11 @@
                                         </svg>
                                     </div>
                                 </div>
-
                             </div>
 
                             <hr th:if="${i.count != i.size}" style="color:lightgray">
 
                         </div>
-
-
-
 
                     </div>
 
@@ -113,8 +110,7 @@
                 var cartId = parseInt(e.currentTarget.id)
 
                 $.ajax({
-                url:"cart"
-                ,data: { cartId : cartId }
+                url:"cart/" + cartId
                 ,type:"DELETE"
                 })
                 .done(function() {
