@@ -1,26 +1,19 @@
 package com.kurly.demo.web;
 
-import com.kurly.demo.domain.Cart;
-import com.kurly.demo.repository.CartRepository;
 import com.kurly.demo.service.CartService;
 import com.kurly.demo.web.dto.CartRequestDto;
+import com.kurly.demo.web.dto.CartListResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/cart")
+@RequestMapping("cart")
 public class CartController {
 
     private final CartService cartService;
@@ -33,10 +26,10 @@ public class CartController {
 
     @GetMapping
     public String cart(HttpSession session, Model model) {
+        List<CartListResponseDto> carts = cartService.findByUserId((Long)session.getAttribute("id"));
+        model.addAttribute("totalPrice", carts.stream().mapToInt(s -> s.getCount() * s.getGoods().getPrice()).sum());
+        model.addAttribute("carts", carts);
 
-        //(Long)session.getAttribute("id")
-        Long UserId = (Long)session.getAttribute("id");
-        model.addAttribute("carts", cartService.findByUserId(UserId));
 
        return "cart/cart";
     }
@@ -44,7 +37,6 @@ public class CartController {
     @DeleteMapping("/{cartId}")
     @ResponseBody
     public void delete(@PathVariable Long cartId) {
-        System.out.println(cartId);
         cartService.delete(cartId);
 
     }

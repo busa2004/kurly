@@ -19,17 +19,18 @@ public class Goods {
     @GeneratedValue
     @Column(name = "goods_id")
     private Long id;
+
     private String img;
     private int price;
     private String name;
-    private String desc;
+    private String description;
 
     @Builder
-    public Goods(String img, int price, String name,String desc){
+    public Goods(String img, int price, String name,String description){
         this.img = img;
         this.price = price;
         this.name = name;
-        this.desc = desc;
+        this.description = description;
     }
 
 }

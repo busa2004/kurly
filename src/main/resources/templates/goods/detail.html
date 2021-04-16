@@ -162,7 +162,7 @@
                 var count = parseInt($('#count').val())
                 var id = [[${goods.id}]];
 
-                if(count < 1){
+                if(!count || count < 1){
                     myModal.show()
                     return
                 }
@@ -174,7 +174,7 @@
             function save(data){
 
                     $.ajax({
-                    url:"cart"
+                    url:"/cart"
                     ,data:data
                     ,type:"POST"
                     })

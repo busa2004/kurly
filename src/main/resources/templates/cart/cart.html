@@ -24,7 +24,7 @@
 
                                     <h6> <img style="width:20px;height:20px;" src="./img/location.png"> 배송지</h6>
                                 </div>
-                                <div>
+                                <div  class="mb-2">
                                     <span>배송지를 입력</span>하고<br>
                                     배송유형을 확인해 보세요!
                                 </div>
@@ -41,12 +41,18 @@
                                 </h6>
                             </div>
                             <div class="m-3">
-                                <span class="text-muted">3000원</span>
+                                <div><span id="totalPrice" th:text="${totalPrice}"></span>원</div>
                             </div>
                         </li>
                     </ul>
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-primary btn-lg">주문하기</button>
+
+                        <button type="button"
+                                onclick="location.href='/order' "
+                                class="btn btn-primary btn-lg"
+                                id="orderBtn">주문하기</button>
+
+
                     </div>
                 </div>
                 <div class="col-md-7 col-lg-8">
@@ -67,10 +73,10 @@
                                 <div th:text="${item.goods.name}" class="col-md-5 d-flex align-items-center">
                                 </div>
                                 <div class="col-md-2 d-flex align-items-center">
-                                        <input type="number" class="form-control" th:value="${item.count}" >
+                                        <input min="0" type="number" th:data-price="${item.goods.price}" th:data-id="${item.id}" class="count-input form-control" th:value="${item.count}" >
                                 </div>
                                 <div  class="col-md-2 d-flex align-items-center flex-row-reverse">
-                                    <div class="text-end"><span th:text="${item.goods.price}"></span>원</div>
+                                    <div class="text-end"><span th:text="${item.totalPrice}" th:id="|price${item.id}|"></span>원</div>
                                 </div>
 
                                 <div class="col-md-1 d-flex align-items-center">
@@ -95,9 +101,16 @@
     </div>
 </body>
 <script>
-    if( $('.removeBtn').length == 0 ){
-        $('#noData').show()
-    }
+
+   isDataExist();
+
+    $(".count-input").change(function(e){
+        var target = e.currentTarget;
+        var pre = parseInt($('#price' + target.dataset.id).text())
+        var aft = parseInt(target.dataset.price) * parseInt(target.value)
+        $('#price' + target.dataset.id).text(aft)
+        $('#totalPrice').text( parseInt($('#totalPrice').text()) + aft - pre )
+    });
 
     $(".removeBtn").click(function(e){
 
@@ -114,18 +127,22 @@
                 ,type:"DELETE"
                 })
                 .done(function() {
-
+                    $('#totalPrice').text( parseInt($('#totalPrice').text()) - parseInt($('#price' + cartId).text()) )
                     $('#carts' + cartId ).remove();
-
-                    if( $('.removeBtn').length == 0 ){
-                        $('#noData').show()
-                    }
+                    isDataExist();
 
                 })
                 .fail(function(error) {
-
                     alert(error);
                 })
+     }
+
+     function isDataExist(){
+        if( $('.removeBtn').length == 0 ){
+           $('#noData').show()
+           $('#orderBtn').addClass('disabled')
+            $('#orderBtn').text('상품을 담아주세요')
+        }
      }
 
 </script>

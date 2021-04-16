@@ -21,7 +21,7 @@ public class HomeController {
         if(user != null){
             model.addAttribute("username",user.getName());
         }
-
+//
 //        Goods goods = new Goods();
 //        goods.setImg("/img/단호박경단.PNG");
 //        goods.setName("[유기방아] 단호박경단");

@@ -24,19 +24,13 @@ public class OrderService {
     private final CartRepository cartRepository;
 
     @Transactional
-    public void save(Long userId, List<Cart> carts) {
+    public void save(Long userId) {
 
         Optional<User> user = userRepository.findById(userId);
-        Order order = Order.builder().user(user.get()).build();
-
-        for (Cart cart : carts){
-            Goods goods = goodsRepository.findOne(cart.getGoods().getId());
-            OrderGoods.builder()
-                    .goods(goods)
-                    .order(order)
-                    .count(cart.getCount());
-        }
-
+        List<Cart> carts = cartRepository.findByUserId(userId);
+        List<OrderGoods> orderGoods = OrderGoods.createOrderGoods(carts);
+        Order order = Order.createOrder(orderGoods,user);
+        orderRepository.save(order);
         cartRepository.deleteByUserId(userId);
 
     }
