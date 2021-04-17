@@ -1,5 +1,4 @@
 spring:
-  address: http://www.kulry.shop/
   session:
     store-type: jdbc
     jdbc:

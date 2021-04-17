@@ -2,8 +2,10 @@ spring:
   security:
     oauth2:
       client:
-        useCurrentUri: false
         registration:
           google:
             client-id: 603709077804-rp6gb82cninabmfk52b4te2jl78cn9rf.apps.googleusercontent.com
             client-secret: PTreSimLJ7L2D5h-7Bf52bPk
+        provider:
+          google:
+            authorization-uri: http://www.kulry.shop:8080/oauth2/authorization/google
