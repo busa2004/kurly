@@ -55,9 +55,7 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping("/callback") public String callback() {
-        System.out.println("redirecting to home page");
-        return "/home"; }
+
 
 
 }
