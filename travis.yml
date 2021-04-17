@@ -1,6 +1,5 @@
 language: java
 jdk: openjdk11
-script:
-  - /home/project/git/kurly/start.sh
+script: "/home/project/git/kurly/start.sh"
 
 
