@@ -16,9 +16,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         setDefaultTargetUrl(defaultTargetUrl);
     }
 
-    /**
-     * 인증에 성공할 경우 아래 매서드로 이동.
-     */
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         HttpSession session = request.getSession();
