@@ -5,4 +5,9 @@ branches:
   only:
     - master
 
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+
 script: "/home/project/git/kurly/start.sh"
