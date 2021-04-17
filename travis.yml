@@ -11,4 +11,5 @@ cache:
     - '$HOME/.gradle'
 before_install:
   - chmod +x gradlew
-script: "/home/project/git/kurly/start.sh"
+
+script: "./gradlew clean build"
