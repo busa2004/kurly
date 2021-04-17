@@ -8,7 +8,7 @@
     <div class="container">
         <div class="text-end m-1" style="font-size:12px;">
 
-            <span sec:authorize="isAnonymous()" ><a href="/oauth2/authorization/google">로그인</a></span>
+            <span sec:authorize="isAnonymous()" ><a href="http://www.kulry.shop:8080/oauth2/authorization/google">로그인</a></span>
 
             <span sec:authorize="isAuthenticated()" class="badge rounded-pill bg-primary">일반</span>
             <span sec:authorize="isAuthenticated()" th:text="${session.name}" id="loginName"></span>
