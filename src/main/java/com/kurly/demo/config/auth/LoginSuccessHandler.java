@@ -23,7 +23,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session != null) {
-                getRedirectStrategy().sendRedirect(request, response, "http://www.kulry.shop:8080/");
+                getRedirectStrategy().sendRedirect(request, response, "http://www.kulry.shop/");
         } else {
             super.onAuthenticationSuccess(request, response, authentication);
         }
