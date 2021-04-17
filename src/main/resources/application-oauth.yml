@@ -7,3 +7,11 @@ spring:
             client-id: 603709077804-rp6gb82cninabmfk52b4te2jl78cn9rf.apps.googleusercontent.com
             client-secret: PTreSimLJ7L2D5h-7Bf52bPk
             scope: profile,email
+            preEstablishedRedirectUri: http://localhost:8080/callback
+            accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+            userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+            tokenName: oauth_token
+            authenticationScheme: query
+            clientAuthenticationScheme: form
+            user-info-uri: https://www.googleapis.com/userinfo/v2/me
+            useCurrentUri: false
