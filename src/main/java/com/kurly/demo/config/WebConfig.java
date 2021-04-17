@@ -1,4 +1,4 @@
-package com.kurly.demo.config.auth;
+package com.kurly.demo.config;
 
 import com.kurly.demo.config.auth.dto.LoginUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
