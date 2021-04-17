@@ -125,6 +125,7 @@
                 $.ajax({
                 url:"cart/" + cartId
                 ,type:"DELETE"
+                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
                 })
                 .done(function() {
                     $('#totalPrice').text( parseInt($('#totalPrice').text()) - parseInt($('#price' + cartId).text()) )
