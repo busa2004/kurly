@@ -12,8 +12,9 @@ spring:
 #    password:
     #driver-class-name: org.h2.Driver
     url : jdbc:mysql://localhost:3306/jpashop?serverTimezone=UTC&characterEncoding=UTF-8
+    #url : jdbc:mysql://192.168.25.51:3306/jpashop?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: 1234
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa: #띄어쓰기 2칸
     hibernate: #띄어쓰기 4칸
@@ -30,4 +31,3 @@ spring:
 logging.level: #띄어쓰기 없음
   org.hibernate.SQL: debug #띄어쓰기 2칸
 # org.hibernate.type: trace #띄어쓰기 2칸
-
