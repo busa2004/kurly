@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
+<head th:replace="fragments/header :: header">
+
+</head>
 <body>
-
-<script>
-
-
-
-</script>
 <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
     <div class="container">
@@ -21,15 +17,16 @@
                         <li class="list-group-item">
                             <div class="m-1">
                                 <div>
-
                                     <h6> <img style="width:20px;height:20px;" src="./img/location.png"> 배송지</h6>
                                 </div>
-                                <div  class="mb-2">
+
+                                <div  id='address' class="mb-2">
                                     <span>배송지를 입력</span>하고<br>
                                     배송유형을 확인해 보세요!
                                 </div>
+
                                 <div class="d-grid gap-2">
-                                    <button type="button" class="btn btn-primary">주소 검색</button>
+                                    <button type="button" class="btn btn-primary" id="addressSearch">주소 검색</button>
                                 </div>
                             </div>
                         </li>
@@ -48,7 +45,6 @@
                     <div class="d-grid gap-2">
 
                         <button type="button"
-                                onclick="location.href='/order' "
                                 class="btn btn-primary btn-lg"
                                 id="orderBtn">주문하기</button>
 
@@ -73,7 +69,7 @@
                                 <div th:text="${item.goods.name}" class="col-md-5 d-flex align-items-center">
                                 </div>
                                 <div class="col-md-2 d-flex align-items-center">
-                                        <input min="0" type="number" th:data-price="${item.goods.price}" th:data-id="${item.id}" class="count-input form-control" th:value="${item.count}" >
+                                        <input min="1" type="number" th:data-price="${item.goods.price}" th:data-id="${item.id}" class="count-input form-control" th:value="${item.count}" >
                                 </div>
                                 <div  class="col-md-2 d-flex align-items-center flex-row-reverse">
                                     <div class="text-end"><span th:text="${item.totalPrice}" th:id="|price${item.id}|"></span>원</div>
@@ -102,7 +98,26 @@
 </body>
 <script>
 
-   isDataExist();
+   var address = '';
+
+   validateCart();
+
+
+    $('#orderBtn').click(function(e){
+        location.href="order/" + address ;
+    })
+
+    $("#addressSearch").click(function(e){
+
+        new daum.Postcode({
+            oncomplete: function(data) {
+                $('#address').text(data.jibunAddress)
+                address = data.jibunAddress;
+                validateCart();
+            }
+        }).open();
+
+    });
 
     $(".count-input").change(function(e){
         var target = e.currentTarget;
@@ -128,7 +143,7 @@
                 .done(function() {
                     $('#totalPrice').text( parseInt($('#totalPrice').text()) - parseInt($('#price' + cartId).text()) )
                     $('#carts' + cartId ).remove();
-                    isDataExist();
+                    validateCart();
 
                 })
                 .fail(function(error) {
@@ -138,13 +153,27 @@
                 })
      }
 
-     function isDataExist(){
+     function validateCart(){
+
         if( $('.removeBtn').length == 0 ){
            $('#noData').show()
            $('#orderBtn').addClass('disabled')
-            $('#orderBtn').text('상품을 담아주세요')
+           $('#orderBtn').text('상품을 담아주세요')
+           return;
         }
+
+        if(!address){
+           $('#orderBtn').addClass('disabled')
+           $('#orderBtn').text('배송지를 입력해주세요')
+           return;
+        }
+
+        $('#orderBtn').removeClass('disabled')
+        $('#orderBtn').text('주문하기')
+
      }
+
+
 
 </script>
 </html>

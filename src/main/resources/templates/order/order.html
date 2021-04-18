@@ -51,8 +51,7 @@
                         <div class="col-2">
                             보내는 분
                         </div>
-                        <div class="col-10">
-                            남영덕
+                        <div class="col-10" th:text="${session.name}">
                         </div>
                     </div>
                     <div class="row">
@@ -60,7 +59,7 @@
                             휴대폰
                         </div>
                         <div class="col-10">
-                            01028353731
+                            12345678
                         </div>
                     </div>
                     <div class="row">
@@ -68,7 +67,21 @@
                             이메일
                         </div>
                         <div class="col-10">
-                            wadzj3@gmail.com
+                            123@123.com
+                        </div>
+                    </div>
+                </div>
+                <hr  style="color:lightgray">
+            </div>
+
+            <div><h5>배송 정보</h5></div>
+                <hr  style="color:black">
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-2">
+                            배송지
+                        </div>
+                        <div class="col-10" th:text="${address}">
                         </div>
                     </div>
                 </div>
