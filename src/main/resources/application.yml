@@ -14,7 +14,7 @@ spring:
 #    url : jdbc:mysql://192.168.25.31:3306/jpashop?serverTimezone=UTC&characterEncoding=UTF-8
 #    password : root
     url : jdbc:mysql://localhost:3306/jpashop?serverTimezone=UTC&characterEncoding=UTF-8
-    password: !@#QWEasd123
+    password: "!@#QWEasd123"
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa: #띄어쓰기 2칸
