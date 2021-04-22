@@ -8,7 +8,9 @@ import lombok.Setter;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,8 +29,8 @@ public class OrderResponseDto {
         for(Order order : orders){
             orderResponseDtos.add(OrderResponseDto.builder()
                     .orderDate(order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                    .firstItem(order.getOrderGoods().get(0).getGoods().getName()
-                               +"외 " + order.getOrderGoods().size())
+                    .firstItem(order.getOrderGoods().get(0).getGoods().getName() +
+                            (order.getOrderGoods().size()>1 ? " 외 " + (order.getOrderGoods().size()-1) + "건" : "" )  )
                     .id(order.getId())
                     .price(order.getOrderGoods().stream()
                             .mapToInt(s -> s.getGoods().getPrice()).sum())
@@ -37,7 +39,7 @@ public class OrderResponseDto {
 
         }
 
-        return orderResponseDtos;
+        return orderResponseDtos.stream().sorted(Comparator.comparing(OrderResponseDto::getOrderDate).reversed()).collect(Collectors.toList());
     }
 
     private static String statusToString(OrderStatus status) {

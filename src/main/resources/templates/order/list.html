@@ -20,12 +20,24 @@
       <div th:each="item,i : ${orders}" class="mb-3">
         <h5 class="text-start" th:text="${item.orderDate}"></h5>
         <div class="card">
-          <div class="card-header" th:text="${item.firstItem}">
+          <div class="card-header" >
+            <div class="row">
+              <div class="col-11">
+                <span th:text="${item.firstItem}"></span>
+              </div>
+              <div class="col-1 text-end">
+                <a th:href="@{/order/list/{id} (id=${item.id})}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-2">
-                <img style="max-width: 100%; height: auto;" src="/img/단호박경단.PNG">
+                <img class="card-img" src="/img/단호박경단.PNG">
               </div>
               <div class="col-10">
                 <dl class="row">

@@ -38,7 +38,13 @@ public class OrderController {
     @GetMapping("/list")
     public String orderList(HttpSession session, Model model) {
         model.addAttribute("orders", orderService.findByUserId((Long)session.getAttribute("id")));
-        return "order/orderList";
+        return "order/list";
+    }
+
+    @GetMapping("/list/{id}")
+    public String orderDetail(HttpSession session, Model model,@PathVariable Long id) {
+        model.addAttribute("orderGoods", orderService.findById(id) );
+        return "order/detail";
     }
 
 

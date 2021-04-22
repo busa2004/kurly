@@ -46,4 +46,9 @@ public class OrderService {
         List<Order> orders = orderRepository.findByUserId(userId);
         return OrderResponseDto.createOrderResponseDtos(orders);
     }
+
+    public List<OrderGoods> findById(Long id) {
+        Optional<Order> order = orderRepository.findById(id);
+        return order.get().getOrderGoods();
+    }
 }
