@@ -1,6 +1,8 @@
 package com.kurly.demo.domain;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,8 +12,9 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "order_goods")
-@Builder
 @Setter
+@Getter
+@NoArgsConstructor
 public class OrderGoods {
 
     @Id
@@ -29,6 +32,11 @@ public class OrderGoods {
 
     private int count; //주문 수량
 
+    @Builder
+    public OrderGoods(Goods goods, int count){
+        this.goods = goods;
+        this.count = count;
+    }
 
     public static List<OrderGoods> createOrderGoods(List<Cart> carts) {
         List<OrderGoods> orderGoods = new ArrayList<OrderGoods>();

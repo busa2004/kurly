@@ -11,7 +11,18 @@
             <span sec:authorize="isAnonymous()" ><a href="/oauth2/authorization/google">로그인</a></span>
 
             <span sec:authorize="isAuthenticated()" class="badge rounded-pill bg-primary">일반</span>
-            <span sec:authorize="isAuthenticated()" th:text="${session.name}" id="loginName"></span>
+
+            <span sec:authorize="isAuthenticated()" class="dropdown">
+                <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span th:text="${session.name}" id="loginName"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="/order/list">주문 내역</a></li>
+                </ul>
+            </span>
+
+
+
             <span sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></span>
 
         </div>

@@ -1,5 +1,5 @@
 package com.kurly.demo.domain;
 
 public enum DeliveryStatus {
-    READY, COMP
+    READY, ING , COMP
 }

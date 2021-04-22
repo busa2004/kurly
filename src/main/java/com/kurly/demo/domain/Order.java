@@ -1,6 +1,8 @@
 package com.kurly.demo.domain;
 
+import com.kurly.demo.web.dto.OrderRequestDto;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "orders")
 @Setter
+@Getter
 @NoArgsConstructor
 public class Order {
 
@@ -27,7 +30,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderGoods> orderGoods = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery; //배송정보
     private LocalDateTime orderDate; //주문시간
@@ -40,12 +43,19 @@ public class Order {
         og.setOrder(this);
     }
 
-    public static Order createOrder(List<OrderGoods> orderGoods, Optional<User> user) {
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
+    public static Order createOrder(List<OrderGoods> orderGoods, Optional<User> user,
+                                    Delivery delivery) {
         Order order = new Order();
         order.setUser(user.get());
         for (OrderGoods og : orderGoods) {
             order.addOrderGoods(og);
         }
+        order.setDelivery(delivery);
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;

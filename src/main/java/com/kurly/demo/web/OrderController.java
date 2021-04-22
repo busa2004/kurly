@@ -4,6 +4,7 @@ import com.kurly.demo.domain.Cart;
 import com.kurly.demo.service.CartService;
 import com.kurly.demo.service.OrderService;
 import com.kurly.demo.web.dto.CartRequestDto;
+import com.kurly.demo.web.dto.OrderRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +22,10 @@ public class OrderController {
     private final CartService cartService;
 
     @PostMapping
-    public String save(HttpSession session) {
-        orderService.save((Long)session.getAttribute("id"));
-        return "redirect:/";
+    @ResponseBody
+    public void save(HttpSession session, OrderRequestDto orderRequestDto) {
+        orderService.save((Long)session.getAttribute("id"), orderRequestDto);
+
     }
 
     @GetMapping("/{address}")
@@ -31,6 +33,12 @@ public class OrderController {
         model.addAttribute("carts", cartService.findByUserId((Long)session.getAttribute("id")));
         model.addAttribute("address",address);
         return "order/order";
+    }
+
+    @GetMapping("/list")
+    public String orderList(HttpSession session, Model model) {
+        model.addAttribute("orders", orderService.findByUserId((Long)session.getAttribute("id")));
+        return "order/orderList";
     }
 
 
