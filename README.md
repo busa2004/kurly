@@ -15,6 +15,12 @@ GET http://www.kulry.shop/api/v2/goods/{id}
 GET http://www.kulry.shop/api/admin/v1/goods  
 GET http://www.kulry.shop/api/admin/v1/goods/{id}  
 
+조회 성공 시  
+200  
+
+저장 성공 시  
+201  
+
 없는값 조회 시  
 404  
 ![image](https://user-images.githubusercontent.com/46153703/115948557-a8c98580-a509-11eb-985e-d53c514a156e.png)  
