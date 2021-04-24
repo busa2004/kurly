@@ -84,7 +84,7 @@ public class GoodsApiController {
         goodsV2.setStorage("상온");
 
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id","name","img","price","info");
+                .filterOutAllExcept("id","name","img","price","storage");
 
         FilterProvider filters = new SimpleFilterProvider().addFilter("GoodsInfoV2",filter);
 
