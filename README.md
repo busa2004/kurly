@@ -4,8 +4,8 @@
 
 ## api
 
-사용시 구글 로그인 필요함.
-기록 DB에 남음.
+사용시 구글 로그인 필요함.  
+기록 DB에 남음.  
 
 api docs  
 http://www.kulry.shop/v2/api-docs  
