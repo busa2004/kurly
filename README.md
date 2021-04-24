@@ -29,3 +29,14 @@ GET http://www.kulry.shop/api/admin/v1/goods/{id}
 400  
 ![image](https://user-images.githubusercontent.com/46153703/115948602-f514c580-a509-11eb-866a-ca6bef91a586.png)  
  
+api docs  
+http://www.kulry.shop/v2/api-docs  
+
+swagger2  
+http://www.kulry.shop/swagger-ui.html  
+
+actuator  
+http://www.kulry.shop/actuator  
+
+hal browser  
+http://www.kulry.shop/browser/index.html  
