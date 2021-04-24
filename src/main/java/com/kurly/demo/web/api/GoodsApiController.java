@@ -6,15 +6,17 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.kurly.demo.domain.Goods;
 import com.kurly.demo.domain.GoodsV2;
 import com.kurly.demo.service.GoodsServie;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -30,7 +32,7 @@ public class GoodsApiController {
 
     //200 : 성공
     @GetMapping("/v1/goods")
-    public MappingJacksonValue retrieveAdminAllGoods() {
+    public MappingJacksonValue retrieveAllGoods() {
         List<Goods> goods = goodsServie.findAll();
 
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
@@ -57,12 +59,19 @@ public class GoodsApiController {
             throw new GoodsNotFoundException(String.format("ID[%s] not found", id));
         }
 
+        EntityModel<Goods> model = EntityModel.of(goods);
+        WebMvcLinkBuilder linkTo =
+                WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllGoods());
+
+        model.add(linkTo.withRel("all-users"));
+
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
                 .filterOutAllExcept("id","name","img","price");
 
         FilterProvider filters = new SimpleFilterProvider().addFilter("GoodsInfo",filter);
 
-        MappingJacksonValue mapping = new MappingJacksonValue(goods);
+        MappingJacksonValue mapping = new MappingJacksonValue(model);
         mapping.setFilters(filters);
 
         return mapping;

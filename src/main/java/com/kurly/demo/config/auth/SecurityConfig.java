@@ -15,6 +15,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -22,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/goods/**","/api/**", "/css/**", "/img/**", "/js/**", "/h2-console/**", "/profile").permitAll()
+                .antMatchers("/","/goods/**", "/css/**", "/img/**", "/js/**", "/h2-console/**", "/profile").permitAll()
 //                .antMatchers("/api/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
                 .and()
