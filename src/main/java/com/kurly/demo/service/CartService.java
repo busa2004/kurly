@@ -26,11 +26,9 @@ public class CartService {
 
     @Transactional
     public void save(Long userId, CartRequestDto requestDto) {
-
         Optional<User> user = userRepository.findById(userId);
         Goods goods = goodsRepository.findOne(requestDto.getGoodsId());
         cartRepository.save(Cart.builder().user(user.get()).goods(goods).count(requestDto.getCount()).build());
-
     }
 
     public List<Cart> findAll(){

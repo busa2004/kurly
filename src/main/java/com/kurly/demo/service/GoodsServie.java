@@ -15,15 +15,20 @@ public class GoodsServie {
     private final GoodsRepository goodsRepository;
 
     @Transactional
-    public void saveGoods(Goods goods) {
-        goodsRepository.save(goods);
+    public Goods saveGoods(Goods goods) {
+        return goodsRepository.save(goods);
     }
 
     public Goods findOne(Long goodsId){
         return goodsRepository.findOne(goodsId);
     }
 
+    public List<Goods> findAll(){return goodsRepository.findAll();}
     public List<Goods> findPaging(int n){
         return goodsRepository.findPaging(n);
+    }
+
+    public void deleteById(Long id) {
+        goodsRepository.deleteById(id);
     }
 }
