@@ -27,11 +27,11 @@ http://www.kulry.shop/browser/index.html
 400  
 ![image](https://user-images.githubusercontent.com/46153703/115948602-f514c580-a509-11eb-866a-ca6bef91a586.png)  
 
-ex)
+ex)  
 
-전체조회
-GET http://www.kulry.shop/api/v1/goods
-개별조회
-GET http://www.kulry.shop/api/v1/goods/{id}
-저장
-POST http://www.kulry.shop/api/v1/goods
+전체조회  
+GET http://www.kulry.shop/api/v1/goods  
+개별조회  
+GET http://www.kulry.shop/api/v1/goods/{id}  
+저장  
+POST http://www.kulry.shop/api/v1/goods  
