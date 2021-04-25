@@ -1,14 +1,17 @@
 package com.kurly.demo.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@JsonFilter("DeliveryInfo")
 public class Delivery {
     @Id
     @GeneratedValue

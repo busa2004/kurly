@@ -23,7 +23,6 @@ public class AdminGoodsApiController {
     private final MessageSource messageSource;
     private final GoodsServie goodsServie;
 
-    //200 : 성공
     @GetMapping("/v1/goods")
     public MappingJacksonValue retrieveAllGoods() {
         List<Goods> goods = goodsServie.findAll();
@@ -39,14 +38,12 @@ public class AdminGoodsApiController {
         return mapping;
     }
 
-    //200 : 성공
-    //404 : 존재하지 않는 값
     @GetMapping("/v1/goods/{id}")
     public MappingJacksonValue retrieveGoods(@PathVariable Long id) {
         Goods goods = goodsServie.findOne(id);
         if(goods == null){
 
-            throw new GoodsNotFoundException(String.format("ID[%s] not found", id));
+            throw new CustomNotFoundException(String.format("ID[%s] not found", id));
         }
 
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter

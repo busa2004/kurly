@@ -9,6 +9,7 @@ import com.kurly.demo.web.dto.CartRequestDto;
 import com.kurly.demo.web.dto.OrderRequestDto;
 import com.kurly.demo.web.dto.OrderResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +51,9 @@ public class OrderService {
     public List<OrderGoods> findById(Long id) {
         Optional<Order> order = orderRepository.findById(id);
         return order.get().getOrderGoods();
+    }
+
+    public List<Order> findOrderByUserId(Long userId) {
+         return orderRepository.findByUserId(userId);
     }
 }

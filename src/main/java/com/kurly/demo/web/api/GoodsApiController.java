@@ -7,7 +7,6 @@ import com.kurly.demo.domain.Goods;
 import com.kurly.demo.domain.GoodsV2;
 import com.kurly.demo.service.GoodsServie;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
@@ -30,7 +29,6 @@ public class GoodsApiController {
     private final MessageSource messageSource;
     private final GoodsServie goodsServie;
 
-    //200 : 성공
     @GetMapping("/v1/goods")
     public MappingJacksonValue retrieveAllGoods() {
         List<Goods> goods = goodsServie.findAll();
@@ -46,8 +44,6 @@ public class GoodsApiController {
         return mapping;
     }
 
-    //200 : 성공
-    //404 : 존재하지 않는 값
     @GetMapping("/v1/goods/{id}") // URI
 //    @GetMapping(value = "/goods/{id}/", params = "version = 1") // PARAMETER
 //    @GetMapping(value = "/goods/{id}", headers = "X-API-VERSION=1") // HEADER
@@ -56,7 +52,7 @@ public class GoodsApiController {
         Goods goods = goodsServie.findOne(id);
         if(goods == null){
 
-            throw new GoodsNotFoundException(String.format("ID[%s] not found", id));
+            throw new CustomNotFoundException(String.format("ID[%s] not found", id));
         }
 
         EntityModel<Goods> model = EntityModel.of(goods);
@@ -85,7 +81,7 @@ public class GoodsApiController {
         Goods goods = goodsServie.findOne(id);
         if(goods == null){
 
-            throw new GoodsNotFoundException(String.format("ID[%s] not found", id));
+            throw new CustomNotFoundException(String.format("ID[%s] not found", id));
         }
 
         GoodsV2 goodsV2 = new GoodsV2();
@@ -103,7 +99,6 @@ public class GoodsApiController {
         return mapping;
     }
 
-    //201 : 성공
     @PostMapping("/v1/goods")
     public ResponseEntity<Goods> createGoods(@Valid @RequestBody Goods goods) {
         Goods savedGoods = goodsServie.saveGoods(goods);

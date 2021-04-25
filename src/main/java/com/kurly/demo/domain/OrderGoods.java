@@ -1,5 +1,6 @@
 package com.kurly.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @NoArgsConstructor
+@JsonFilter("OrderGoodsInfo")
 public class OrderGoods {
 
     @Id
@@ -46,4 +48,5 @@ public class OrderGoods {
         return orderGoods;
 
     }
+
 }

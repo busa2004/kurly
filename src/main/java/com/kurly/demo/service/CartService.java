@@ -32,8 +32,11 @@ public class CartService {
     }
 
     public List<Cart> findAll(){
-
         return cartRepository.findAll();
+    }
+
+    public List<Cart> findCartsByUserId(Long UserId) {
+        return cartRepository.findAllByUserId(UserId);
     }
 
     public List<CartListResponseDto> findByUserId(Long userId){
@@ -46,5 +49,6 @@ public class CartService {
 
         cartRepository.deleteById(cartId);
     }
+
 
 }

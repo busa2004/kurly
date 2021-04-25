@@ -1,5 +1,6 @@
 package com.kurly.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.kurly.demo.web.dto.OrderRequestDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @NoArgsConstructor
+@JsonFilter("OrderInfo")
 public class Order {
 
     @Id
@@ -37,6 +39,7 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문상태 [ORDER, CANCEL]
+
 
     public void addOrderGoods(OrderGoods og) {
         orderGoods.add(og);
@@ -60,6 +63,8 @@ public class Order {
         order.setOrderDate(LocalDateTime.now());
         return order;
     }
+
+
 
 
 

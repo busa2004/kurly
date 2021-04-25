@@ -1,6 +1,6 @@
 package com.kurly.demo.exception;
 
-import com.kurly.demo.web.api.GoodsNotFoundException;
+import com.kurly.demo.web.api.CustomNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     //404
-    @ExceptionHandler(GoodsNotFoundException.class)
+    @ExceptionHandler(CustomNotFoundException.class)
     public final ResponseEntity<Object> handleUserNotFoundException(Exception ex, WebRequest request){
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
