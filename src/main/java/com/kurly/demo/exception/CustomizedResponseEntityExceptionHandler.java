@@ -2,19 +2,24 @@ package com.kurly.demo.exception;
 
 import com.kurly.demo.web.api.CustomNotFoundException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
+import java.util.Set;
 
-@RestController
-@ControllerAdvice
+@RestControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     //5XX
@@ -47,6 +52,35 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+    //400
+    @Override
+    protected ResponseEntity<Object> handleMissingPathVariable(
+            MissingPathVariableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                "missing path", ex.getMessage());
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    //405
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        pageNotFoundLogger.warn(ex.getMessage());
+
+        Set<HttpMethod> supportedMethods = ex.getSupportedHttpMethods();
+        if (!CollectionUtils.isEmpty(supportedMethods)) {
+            headers.setAllow(supportedMethods);
+        }
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                "method not supported", "Available Method : "+ex.getSupportedHttpMethods().toString());
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
 
 
 }

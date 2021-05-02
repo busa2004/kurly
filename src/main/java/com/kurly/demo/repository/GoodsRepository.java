@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,11 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GoodsRepository {
     private final EntityManager em;
-
-    public Goods save(Goods goods) {
-
-        em.persist(goods);
-        return goods;
+    public Goods save(Goods goods){
+            em.persist(goods);
+            return goods;
     }
 
     public Goods findOne(Long id){

@@ -41,7 +41,7 @@ public class Goods {
     private int price;
 
     @ApiModelProperty(notes = "상품명")
-    @Size(min=2, message = "Name은 2글자 이상 입력해주세요")
+    @Size(min=2, message = "상품명은 2글자 이상 입력해주세요")
     private String name;
 
     //@JsonIgnore

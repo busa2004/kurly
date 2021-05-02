@@ -3,10 +3,10 @@ package com.kurly.demo.web.api;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.kurly.demo.common.Common;
 import com.kurly.demo.domain.Goods;
 import com.kurly.demo.domain.GoodsV2;
 import com.kurly.demo.service.GoodsServie;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.MessageSource;
@@ -28,20 +28,26 @@ public class GoodsApiController {
 
     private final MessageSource messageSource;
     private final GoodsServie goodsServie;
+    private final Common common;
+    private final String goodsFilterName = "GoodsInfo";
+    private final String goodsV2FilterName = "GoodsInfoV2";
 
     @GetMapping("/v1/goods")
     public MappingJacksonValue retrieveAllGoods() {
         List<Goods> goods = goodsServie.findAll();
+        return common.filter(goods,goodsFilterName,"id","name","img","price");
+    }
 
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id","name","img","price");
+    @PostMapping("/v1/goods")
+    public ResponseEntity<Goods> createGoods(@Valid @RequestBody Goods goods) throws Exception {
+        Goods savedGoods = goodsServie.saveGoods(goods);
 
-        FilterProvider filters = new SimpleFilterProvider().addFilter("GoodsInfo",filter);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedGoods.getId())
+                .toUri();
 
-        MappingJacksonValue mapping = new MappingJacksonValue(goods);
-        mapping.setFilters(filters);
-
-        return mapping;
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/v1/goods/{id}") // URI
@@ -52,7 +58,7 @@ public class GoodsApiController {
         Goods goods = goodsServie.findOne(id);
         if(goods == null){
 
-            throw new CustomNotFoundException(String.format("ID[%s] not found", id));
+            throw new CustomNotFoundException(messageSource.getMessage("error.notFound",new String[]{id.toString()},Locale.getDefault()));
         }
 
         EntityModel<Goods> model = EntityModel.of(goods);
@@ -62,15 +68,12 @@ public class GoodsApiController {
 
         model.add(linkTo.withRel("all-users"));
 
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id","name","img","price");
+        return common.filter(goods,goodsFilterName,"id","name","img","price");
+    }
 
-        FilterProvider filters = new SimpleFilterProvider().addFilter("GoodsInfo",filter);
+    @DeleteMapping("/v1/goods/{id}")
+    public void deleteGoods(@PathVariable Long id) {
 
-        MappingJacksonValue mapping = new MappingJacksonValue(model);
-        mapping.setFilters(filters);
-
-        return mapping;
     }
 
     @GetMapping("/v2/goods/{id}")
@@ -88,28 +91,10 @@ public class GoodsApiController {
         BeanUtils.copyProperties(goods,goodsV2);
         goodsV2.setStorage("상온");
 
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id","name","img","price","storage");
-
-        FilterProvider filters = new SimpleFilterProvider().addFilter("GoodsInfoV2",filter);
-
-        MappingJacksonValue mapping = new MappingJacksonValue(goodsV2);
-        mapping.setFilters(filters);
-
-        return mapping;
+        return common.filter(goodsV2,goodsV2FilterName,"id","name","img","price","storage");
     }
 
-    @PostMapping("/v1/goods")
-    public ResponseEntity<Goods> createGoods(@Valid @RequestBody Goods goods) {
-        Goods savedGoods = goodsServie.saveGoods(goods);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedGoods.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
-    }
 
     @GetMapping("/hello")
     public String hello(@RequestHeader(name="Accept-Language",required=false) Locale locale){
