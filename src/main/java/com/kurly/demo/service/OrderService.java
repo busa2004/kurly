@@ -5,6 +5,7 @@ import com.kurly.demo.repository.CartRepository;
 import com.kurly.demo.repository.GoodsRepository;
 import com.kurly.demo.repository.OrderRepository;
 import com.kurly.demo.repository.UserRepository;
+import com.kurly.demo.web.api.CustomNotFoundException;
 import com.kurly.demo.web.dto.CartRequestDto;
 import com.kurly.demo.web.dto.OrderRequestDto;
 import com.kurly.demo.web.dto.OrderResponseDto;
@@ -27,7 +28,7 @@ public class OrderService {
     private final CartRepository cartRepository;
 
     @Transactional
-    public void save(Long userId, OrderRequestDto orderRequestDto) {
+    public Order save(Long userId, OrderRequestDto orderRequestDto) {
 
         Optional<User> user = userRepository.findById(userId);
         List<Cart> carts = cartRepository.findByUserId(userId);
@@ -41,6 +42,7 @@ public class OrderService {
         orderRepository.save(order);
         cartRepository.deleteByUserId(userId);
 
+        return order;
     }
 
     public List<OrderResponseDto> findByUserId(Long userId) {
@@ -55,5 +57,21 @@ public class OrderService {
 
     public List<Order> findOrderByUserId(Long userId) {
          return orderRepository.findByUserId(userId);
+    }
+
+    @Transactional
+    public Order cancelOrder(Long orderId) {
+        //주문 엔티티 조회
+        Optional<Order> order = orderRepository.findById(orderId);
+        //주문 취소
+        if(order.isPresent())
+            order.get().cancel();
+        else{
+            throw new CustomNotFoundException(
+                    String.format("Order ID [%s] could not be found.", orderId)
+            );
+        }
+
+        return order.get();
     }
 }

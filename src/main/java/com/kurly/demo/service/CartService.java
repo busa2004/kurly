@@ -6,6 +6,7 @@ import com.kurly.demo.domain.User;
 import com.kurly.demo.repository.CartRepository;
 import com.kurly.demo.repository.GoodsRepository;
 import com.kurly.demo.repository.UserRepository;
+import com.kurly.demo.web.api.CustomNotFoundException;
 import com.kurly.demo.web.dto.CartRequestDto;
 import com.kurly.demo.web.dto.CartListResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,18 @@ public class CartService {
         cartRepository.deleteById(cartId);
     }
 
+    @Transactional
+    public void updateCart(Long cartId, CartRequestDto cartRequestDto) {
 
+        Optional<Cart> cart = cartRepository.findById(cartId);
+
+        if(cart.isPresent())
+            cart.get().countChange(cartRequestDto);
+        else{
+            throw new CustomNotFoundException(
+                    String.format("Cart ID [%s] could not be found.", cartId)
+            );
+        }
+
+    }
 }

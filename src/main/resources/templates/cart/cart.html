@@ -125,6 +125,8 @@
         var aft = parseInt(target.dataset.price) * parseInt(target.value)
         $('#price' + target.dataset.id).text(aft)
         $('#totalPrice').text( parseInt($('#totalPrice').text()) + aft - pre )
+        changeCount(target.dataset.id,parseInt(target.value));
+
     });
 
     $(".removeBtn").click(function(e){
@@ -132,6 +134,22 @@
       removeCart(e);
 
     });
+
+   function changeCount(cartId,count){
+           var data = {count:count};
+           $.ajax({
+               url:"/api/v1/carts/" + cartId
+               ,type:"PUT"
+               ,data:JSON.stringify(data)
+               ,contentType: 'application/json'
+           }).done(function() {
+
+           })
+           .fail(function(error) {
+               console.log(error);
+               alert(error);
+           })
+   }
 
     function removeCart(e){
 

@@ -2,6 +2,7 @@ package com.kurly.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kurly.demo.web.dto.CartRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class Cart {
     }
 
 
-
-
+    public void countChange(CartRequestDto cartRequestDto) {
+        this.count = cartRequestDto.getCount();
+    }
 }
