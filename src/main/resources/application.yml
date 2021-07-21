@@ -13,9 +13,9 @@ spring:
     #driver-class-name: org.h2.Driver
 #    url : jdbc:mysql://192.168.25.31:3306/jpashop?serverTimezone=UTC&characterEncoding=UTF-8
 #    password : root
-    url : jdbc:mysql://localhost:3306/jpashop?serverTimezone=UTC&characterEncoding=UTF-8
-    password: "!@#QWEasd123"
-    username: root
+    url : jdbc:mysql://database-1.cry2vlchfgw9.ap-northeast-2.rds.amazonaws.com:3306/innodb?serverTimezone=UTC&characterEncoding=UTF-8
+    password: z7433731
+    username: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa: #띄어쓰기 2칸
     hibernate: #띄어쓰기 4칸
